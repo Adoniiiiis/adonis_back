@@ -58,6 +58,8 @@ services:
             - sail
         ports:
             - 8001:80
+        volumes:
+            - 'sail-mysql:/var/lib/mysql'
 networks:
     sail:
         driver: bridge

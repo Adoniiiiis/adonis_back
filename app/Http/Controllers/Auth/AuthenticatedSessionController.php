@@ -23,6 +23,7 @@ class AuthenticatedSessionController extends Controller
         if ($existingUser && $isPasswordRight) {
             return response()->json([
                 'status' => 'success',
+                'userData' => $existingUser,
             ]);
         } else {
             return response()->json([

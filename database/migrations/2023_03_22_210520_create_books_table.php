@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('subtitle')->nullable();
             $table->string('author');
+            $table->integer('ranking');
             $table->string('tag_page')->nullable();
             $table->timestamps();
         });

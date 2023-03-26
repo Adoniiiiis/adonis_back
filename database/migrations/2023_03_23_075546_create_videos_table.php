@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('link');
             $table->string('tag_time')->nullable();
+            $table->integer('ranking');
             $table->timestamps();
         });
     }

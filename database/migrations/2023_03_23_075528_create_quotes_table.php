@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('book_id')->nullable();
             $table->text('quote');
             $table->string('author');
+            $table->integer('ranking');
             $table->timestamps();
         });
     }

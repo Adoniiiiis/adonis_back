@@ -17,10 +17,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $existingUser = User::where('email', $request->email)->first();
-        $isPasswordRight = Hash::check($request->password, $existingUser->password);
-
-        if ($existingUser && $isPasswordRight) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            $existingUser = User::where('email', $request->email)->first();
             return response()->json([
                 'status' => 'success',
                 'userData' => $existingUser,

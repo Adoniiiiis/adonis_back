@@ -18,21 +18,19 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store()
     {
-        $existingUser = User::where('email', $request->email)->first();
+        $credentials = request(['name', 'username', 'email', 'password']);
+        $credentials['password'] = Hash::make($credentials['password']);
+
+        $existingUser = User::where('email', $credentials['email'])->first();
         if ($existingUser) {
             return response()->json([
                 'status' => 'error',
                 'message' => '*Addresse email déjà utilisée'
             ]);
         } else {
-            User::create([
-                'name' => $request->name,
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+            User::create($credentials);
             return response()->json([
                 'status' => 'success',
                 'userData' => $existingUser

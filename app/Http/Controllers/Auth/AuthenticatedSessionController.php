@@ -5,43 +5,74 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request)
+    public function store()
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            $existingUser = User::where('email', $request->email)->first();
-            return response()->json([
-                'status' => 'success',
-                'userData' => $existingUser,
-            ]);
-        } else {
+        $credentials = request(['email', 'password']);
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json([
                 'status' => 'error',
                 'message' => '*Email ou mot de passe incorrects'
             ]);
+        } else {
+            return $this->respondWithToken($token);
         }
     }
 
     /**
-     * Destroy an authenticated session.
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Request $request): Response
+    public function logout()
     {
-        Auth::guard('web')->logout();
+        auth()->logout();
 
-        $request->session()->invalidate();
+        return response()->json(['message' => 'Successfully logged out']);
+    }
 
-        $request->session()->regenerateToken();
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
 
-        return response()->noContent();
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        // $existingUser = User::where('email', $email)->first();
+        return response()->json([
+            'status' => 'success',
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user(),
+        ]);
     }
 }

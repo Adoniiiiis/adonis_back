@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Books;
 use App\Models\Quotes;
+use App\Models\User;
 use App\Models\Videos;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class ContentDataController extends Controller
         $videos = Videos::all();
 
         $homepageContentData = [];
+        
         foreach ($books as $book) {
             $book->category = 'book';
             array_push($homepageContentData, $book);
@@ -36,7 +38,7 @@ class ContentDataController extends Controller
         });
 
         return response()->json([
-            'contentData' => $homepageContentData
+            'contentData' => $homepageContentData,
         ]);
     }
 

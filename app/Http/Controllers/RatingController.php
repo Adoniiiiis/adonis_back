@@ -14,17 +14,17 @@ class RatingController extends Controller
         if ($request->category === 'quote') {
             $quote = Quotes::where('id', $request->postId)->first();
             $quote->update([
-                'ranking' => $request->note
+                'ranking' => $quote->ranking + $request->newValue
             ]);
         } else if ($request->category === 'book') {
             $book = Books::where('id', $request->postId)->first();
             $book->update([
-                'ranking' => $request->note
+                'ranking' => $book->ranking + $request->newValue
             ]);
         } else if ($request->category === 'video') {
             $video = Videos::where('id', $request->postId)->first();
             $video->update([
-                'ranking' => $request->note
+                'ranking' => $video->ranking + $request->newValue
             ]);
         }
     }

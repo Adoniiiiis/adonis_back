@@ -11,22 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('contents', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('subtitle')->nullable();
+            $table->integer('category_id');
             $table->string('author');
-            $table->integer('ranking');
+            $table->integer('book_id')->nullable();
             $table->string('tag_page')->nullable();
+            $table->string('tag_time')->nullable();
+            $table->string('title')->nullable();
+            $table->text('subtitle')->nullable();
+            $table->text('quote')->nullable();
+            $table->string('link')->nullable();
             $table->timestamps();
         });
     }
 
     /**
+     * 
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('contents');
     }
 };

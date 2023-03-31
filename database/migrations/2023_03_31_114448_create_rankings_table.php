@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('quotes', function (Blueprint $table) {
-            $table->integer('category_id');
+        Schema::create('rankings', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->integer('content_id');
+            $table->integer('rating');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('quotes', function (Blueprint $table) {
-            $table->dropColumn('category_id');
-        });
+        Schema::dropIfExists('rankings');
     }
 };

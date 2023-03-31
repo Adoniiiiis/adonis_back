@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ContentDataController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
 use Illuminate\Http\Request;
@@ -25,8 +25,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::post('/change-password', [ProfileController::class, 'changePassword']);
 Route::post('/ranking', [RatingController::class, 'updateRanking']);
 
-Route::controller(ContentDataController::class)->group(function () {
-    Route::get('/getHomepageContent', 'getHomepageContent');
-    Route::get('/getHomepageSortedContent', 'getHomepageSortedContent');
+Route::controller(ContentController::class)->group(function () {
+    Route::get('/getPopularContent', 'getPopularContent');
+    Route::get('/getContentByCategory/{categoryName}', 'getContentByCategory');
     Route::get('/getNewContent', 'getNewContent');
 });

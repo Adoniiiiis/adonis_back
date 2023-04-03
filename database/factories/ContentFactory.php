@@ -20,6 +20,7 @@ class ContentFactory extends Factory
     {
         return [
             'category_id' => 1,
+            'title' => 'Reject Degeneracy & Embrace God.',
             'author' => 'Hamza',
             'tag_time' => "11:11",
             'subtitle' => 'L\'exemple d\'un subtitle...',

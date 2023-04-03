@@ -28,9 +28,9 @@ Route::post('/change-password', [ProfileController::class, 'changePassword']);
 Route::post('/ranking', [RatingController::class, 'updateRanking']);
 
 Route::controller(ContentController::class)->group(function () {
-    Route::get('/getPopularContent', 'getPopularContent');
-    Route::get('/getContentByCategory/{categoryName}', 'getContentByCategory');
-    Route::get('/getNewContent', 'getNewContent');
+    Route::get('/getPopularContent/{userId}', 'getPopularContent');
+    Route::get('/getContentByCategory/{categoryName}/{userId}', 'getContentByCategory');
+    Route::get('/getNewContent/{userId}', 'getNewContent');
 });
 
 Route::apiResource('bookmarks', BookmarkController::class);

@@ -66,7 +66,6 @@ class AuthenticatedSessionController extends Controller
      */
     protected function respondWithToken($token)
     {
-        // $existingUser = User::where('email', $email)->first();
         return response()->json([
             'status' => 'success',
             'access_token' => $token,

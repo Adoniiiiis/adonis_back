@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
             User::create($credentials);
             return response()->json([
                 'status' => 'success',
-                'userData' => $existingUser
+                'user' => $existingUser
             ]);
         }
     }

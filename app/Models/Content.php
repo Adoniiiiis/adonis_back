@@ -21,4 +21,9 @@ class Content extends Model
         $categoryName = $category[0]['name'];
         return $categoryName;
     }
+
+    public function loadContent()
+    {
+        Content::factory()->create();
+    }
 }

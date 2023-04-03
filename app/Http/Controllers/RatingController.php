@@ -4,28 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Books;
 use App\Models\Quotes;
+use App\Models\Ranking;
 use App\Models\Videos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RatingController extends Controller
 {
     public function updateRanking(Request $request)
     {
-        if ($request->category === 'quote') {
-            $quote = Quotes::where('id', $request->postId)->first();
-            $quote->update([
-                'ranking' => $quote->ranking + $request->newValue
-            ]);
-        } else if ($request->category === 'book') {
-            $book = Books::where('id', $request->postId)->first();
-            $book->update([
-                'ranking' => $book->ranking + $request->newValue
-            ]);
-        } else if ($request->category === 'video') {
-            $video = Videos::where('id', $request->postId)->first();
-            $video->update([
-                'ranking' => $video->ranking + $request->newValue
+        $alreadyRated = DB::table('rankings')->where('user_id', $request->userId)->where('content_id', $request->postId)->exists();
+        if ($alreadyRated) {
+            Ranking::where('user_id', $request->userId)->where('content_id', $request->postId)->delete();
+            if ($request->newValue !== 0) {
+                Ranking::insert([
+                    'user_id' => $request->userId,
+                    'content_id' => $request->postId,
+                    'rating' => $request->newValue
+                ]);
+            }
+        } else {
+            Ranking::insert([
+                'user_id' => $request->userId,
+                'content_id' => $request->postId,
+                'rating' => $request->newValue
             ]);
         }
     }
-}
+}            

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bookmark;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookmarkController extends Controller
 {
@@ -33,6 +34,7 @@ class BookmarkController extends Controller
         foreach ($userBookmarks as $userBookmark) {
             $content = $userBookmark->content();
             $content->category = $content->category();
+            $content->isBookmarked = true;
             $ratings = $content->ratings();
             $ratingsArray = [];
             foreach ($ratings as $rating) {
@@ -47,12 +49,17 @@ class BookmarkController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function updateBookmark(Request $request)
+   {
+        $isBookmarked = Bookmark::where('user_id', $request->userId)->where('content_id', $request->postId)->first();
+        if ($isBookmarked) {
+            $isBookmarked->delete();
+        } else {
+            Bookmark::insert([
+                'user_id' => $request->userId,
+                'content_id' => $request->postId
+            ]);
+        }
     }
 
     /**

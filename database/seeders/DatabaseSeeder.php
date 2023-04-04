@@ -33,6 +33,31 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('root'),
         ]);
         Category::factory()->count(1)->create();
-        Content::factory()->count(3)->create();
+        Category::factory()->count(1)->create([
+            'name' => 'book'
+        ]);
+        Category::factory()->count(1)->create([
+            'name' => 'quote'
+        ]);
+        Content::factory()->count(1)->create([
+            'category_id' => 1,
+            'title' => 'Reject Degeneracy & Embrace God.',
+            'author' => 'Hamza',
+            'tag_time' => "11:11",
+            'subtitle' => 'L\'exemple d\'un subtitle...',
+            'link' => 'https://www.youtube.com/watch?v=-QdoEt_Qdxo',
+        ]);
+        Content::factory()->count(1)->create([
+            'category_id' => 2,
+            'title' => 'Platon oeuvres complètes',
+            'tag_page' => 111,
+            'author' => 'Platon',
+        ]);
+        Content::factory()->count(1)->create([
+            'category_id' => 3,
+            'quote' => 'Je sais que je ne sais rien.',
+            'author' => 'Socrate',
+            'book_id' => 3,
+        ]);
     }
 }

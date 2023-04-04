@@ -18,13 +18,6 @@ class ContentFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'category_id' => 1,
-            'title' => 'Reject Degeneracy & Embrace God.',
-            'author' => 'Hamza',
-            'tag_time' => "11:11",
-            'subtitle' => 'L\'exemple d\'un subtitle...',
-            'link' => 'https://www.youtube.com/watch?v=-QdoEt_Qdxo',
-        ];
+        return [];
     }
 }

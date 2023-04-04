@@ -39,7 +39,14 @@ class DatabaseSeeder extends Seeder
         Category::factory()->count(1)->create([
             'name' => 'quote'
         ]);
-        Content::factory()->count(1)->create();
+        Content::factory()->count(1)->create([
+            'category_id' => 1,
+            'title' => 'Reject Degeneracy & Embrace God.',
+            'author' => 'Hamza',
+            'tag_time' => "11:11",
+            'subtitle' => 'L\'exemple d\'un subtitle...',
+            'link' => 'https://www.youtube.com/watch?v=-QdoEt_Qdxo',
+        ]);
         Content::factory()->count(1)->create([
             'category_id' => 2,
             'title' => 'Platon oeuvres complètes',

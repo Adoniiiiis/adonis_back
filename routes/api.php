@@ -34,3 +34,4 @@ Route::controller(ContentController::class)->group(function () {
 });
 
 Route::apiResource('bookmarks', BookmarkController::class);
+Route::post('updateBookmark', [BookmarkController::class, 'updateBookmark']);

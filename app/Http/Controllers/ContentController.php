@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Content;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
@@ -60,6 +61,25 @@ class ContentController extends Controller
 
         return response()->json([
             'content' => $contentArray
+        ]);
+    }
+   
+    public function createContent(Request $request)
+    {
+        $categoryId = Category::where('name', $request->finalObject["category"])->get('id')[0]->id;
+        $content = Content::create([
+            'category_id' => $categoryId,
+            'author' => $request->finalObject["author"] ?? null,
+            'title' => $request->finalObject["title"] ?? null,
+            'tag_page' => $request->finalObject["tag_page"] ?? null,
+            'tag_time' => $request->finalObject["tag_time"] ?? null,
+            'subtitle' => $request->finalObject["subtitle"] ?? null,
+            'quote' => $request->finalObject["quote"] ?? null,
+            'link' => $request->finalObject["link"] ?? null,
+        ]);
+        $content->save();
+        return response()->json([
+            'content' => $content
         ]);
     }
 }

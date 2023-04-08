@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Content::factory()->count(1)->create([
             'category_id' => 3,
-            'quote' => 'Je sais que je ne sais rien.',
+            'quote' => '"Je sais que je ne sais rien."',
             'author' => 'Socrate',
             'book_id' => 3,
         ]);

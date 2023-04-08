@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Content;
+use App\Models\Ranking;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -16,14 +17,24 @@ class ContentController extends Controller
     public function getRankingCategoryIsBookmarked($contents, $userId) 
     {
         $contentArray = [];
+
         foreach($contents as $post) {
             $ratingsArray = [];
             foreach ($post->ratings() as $rating) {
                 array_push($ratingsArray, $rating->rating);
             }
             $post->ranking = array_sum($ratingsArray);
+
+            $alreadyRatedByUser = Ranking::where('user_id', $userId)->where('content_id', $post->id)->first();
+            if ($alreadyRatedByUser) {
+                $post->userRating = $alreadyRatedByUser->rating;
+            } else {
+                $post->userRating = null;
+            }
+
             $post->category = $post->category();
             $post->isBookmarked = DB::table('bookmarks')->where('user_id', $userId)->where('content_id', $post->id)->exists();
+            
             array_push($contentArray, $post);
         }
         return $contentArray;

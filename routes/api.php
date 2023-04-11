@@ -4,6 +4,8 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\SettingsController;
+use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +36,4 @@ Route::controller(ContentController::class)->group(function () {
 
 Route::apiResource('bookmarks', BookmarkController::class);
 Route::post('updateBookmark', [BookmarkController::class, 'updateBookmark']);
+Route::post('changeProfile', [SettingsController::class, 'changeProfile']);

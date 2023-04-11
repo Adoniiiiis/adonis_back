@@ -4,9 +4,7 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RatingController;
-use App\Models\Bookmark;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -184,6 +184,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        // Aws\Laravel\AwsServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -213,6 +215,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        // 'AWS' => Aws\Laravel\AwsFacade::class, 
+        'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
 ];

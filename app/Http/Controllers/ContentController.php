@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Content;
 use App\Models\Ranking;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ContentController extends Controller
 {
@@ -77,6 +80,22 @@ class ContentController extends Controller
    
     public function createContent(Request $request)
     {
+        $bookCover = null;
+        $raw_file = $request->finalObject['bookCover'];
+        $fileName = time().'.'.$raw_file->getClientOriginalName();
+        $filePath = 'bookCovers/'.$fileName;
+
+        $file = Image::make($raw_file);
+        $file->stream();
+        $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());
+
+        if ($file) {
+            $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());
+            if ($isFileUploaded) {
+                $bookCover = 'https://d1su1qzc1audfz.cloudfront.net/'.$filePath;
+            }
+        } 
+
         $categoryId = Category::where('name', $request->finalObject["category"])->get('id')[0]->id;
         $content = Content::create([
             'category_id' => $categoryId,
@@ -87,6 +106,7 @@ class ContentController extends Controller
             'subtitle' => $request->finalObject["subtitle"] ?? null,
             'quote' => $request->finalObject["quote"] ?? null,
             'link' => $request->finalObject["link"] ?? null,
+            'book_cover' => $bookCover,
         ]);
         $content->save();
         return response()->json([

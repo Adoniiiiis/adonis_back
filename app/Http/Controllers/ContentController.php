@@ -92,7 +92,7 @@ class ContentController extends Controller
         if ($file) {
             $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());
             if ($isFileUploaded) {
-                $bookCover = Storage::disk('s3')->url($filePath);
+                $bookCover = 'https://d1su1qzc1audfz.cloudfront.net/'.$filePath;
             }
         } 
 

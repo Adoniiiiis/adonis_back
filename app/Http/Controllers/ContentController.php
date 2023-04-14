@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Content;
 use App\Models\Ranking;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -80,21 +82,21 @@ class ContentController extends Controller
    
     public function createContent(Request $request)
     {
-        $bookCover = null;
-        $raw_file = $request->finalObject['bookCover'];
-        $fileName = time().'.'.$raw_file->getClientOriginalName();
-        $filePath = 'bookCovers/'.$fileName;
-
-        $file = Image::make($raw_file);
-        $file->stream();
-        $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());
-
-        if ($file) {
+        $bookCover = $request->finalObject['bookCover'] ?? null;
+        if ($bookCover) {
+            $raw_file = $request->finalObject['bookCover'];
+            $fileName = time().'.'.$raw_file->getClientOriginalName();
+            $filePath = 'bookCovers/'.$fileName;
+    
+            $file = Image::make($raw_file);
+            $file->stream();
+            $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());    
+        
             $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());
             if ($isFileUploaded) {
                 $bookCover = 'https://d1su1qzc1audfz.cloudfront.net/'.$filePath;
             }
-        } 
+        }
 
         $categoryId = Category::where('name', $request->finalObject["category"])->get('id')[0]->id;
         $content = Content::create([

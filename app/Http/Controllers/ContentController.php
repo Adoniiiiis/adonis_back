@@ -65,6 +65,10 @@ class ContentController extends Controller
         $contents = Content::where('category_id', $category[0]->id)->get();
         $contentArray = $this->getRankingCategoryIsBookmarked($contents, $userId);
 
+        usort($contentArray, function($a, $b) {
+            return $a['ranking'] < $b['ranking'];
+        });
+
         return response()->json([
             'content' => $contentArray
         ]);

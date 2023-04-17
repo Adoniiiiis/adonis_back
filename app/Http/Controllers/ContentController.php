@@ -113,10 +113,16 @@ class ContentController extends Controller
             'quote' => $request->finalObject["quote"] ?? null,
             'link' => $request->finalObject["link"] ?? null,
             'book_cover' => $bookCover,
+            'user_id' => $request->finalObject['user_id'],
         ]);
         $content->save();
         return response()->json([
             'content' => $content
         ]);
+    }
+
+    public function deleteContent(Request $request)
+    {
+        Content::where('user_id', $request->userId)->where('id', $request->postId)->delete();
     }
 }

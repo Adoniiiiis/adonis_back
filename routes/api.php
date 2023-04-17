@@ -32,6 +32,7 @@ Route::controller(ContentController::class)->group(function () {
     Route::get('/getPopularContent/{userId}', 'getPopularContent');
     Route::get('/getContentByCategory/{categoryName}/{userId}', 'getContentByCategory');
     Route::get('/getNewContent/{userId}', 'getNewContent');
+    Route::post('deleteContent', 'deleteContent');
 });
 
 Route::apiResource('bookmarks', BookmarkController::class);

@@ -94,9 +94,7 @@ class ContentController extends Controller
     
             $file = Image::make($raw_file);
             $file->stream();
-            $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());    
-        
-            $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());
+            $isFileUploaded = Storage::disk('s3')->put($filePath, $file->__toString());    ;
             if ($isFileUploaded) {
                 $bookCover = 'https://d1su1qzc1audfz.cloudfront.net/'.$filePath;
             }

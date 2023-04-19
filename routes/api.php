@@ -35,6 +35,11 @@ Route::controller(ContentController::class)->group(function () {
     Route::post('deleteContent', 'deleteContent');
 });
 
+Route::controller(SettingsController::class)->group(function () {
+    Route::post('changeProfile', 'changeProfile');
+    Route::post('changeProfileImg', 'changeProfileImg');
+    Route::get('getProfileImg/{userId}', 'getProfileImg');
+});
+
 Route::apiResource('bookmarks', BookmarkController::class);
 Route::post('updateBookmark', [BookmarkController::class, 'updateBookmark']);
-Route::post('changeProfile', [SettingsController::class, 'changeProfile']);

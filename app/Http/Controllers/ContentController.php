@@ -114,6 +114,8 @@ class ContentController extends Controller
             'user_id' => $request->finalObject['user_id'],
         ]);
         $content->save();
+        $categoryName = Category::where('id', $content->category_id)->get('name');
+        $content->category = $categoryName[0]->name;
         return response()->json([
             'content' => $content
         ]);

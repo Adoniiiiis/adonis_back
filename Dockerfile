@@ -8,6 +8,7 @@ RUN docker-php-ext-install pdo mbstring
 WORKDIR /app
 COPY . /app
 
+RUN composer update
 RUN composer install
 
 EXPOSE 8000

@@ -8,8 +8,7 @@ RUN docker-php-ext-install pdo mbstring
 WORKDIR /app
 COPY . /app
 
-RUN composer update --ignore-platform-reqs
-RUN composer install --ignore-platform-reqs
+RUN composer install
 
 EXPOSE 8000
 CMD php artisan serve --host=0.0.0.0 --port=8000

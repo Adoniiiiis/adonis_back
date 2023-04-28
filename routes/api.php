@@ -26,12 +26,12 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::post('/change-password', [ProfileController::class, 'changePassword']);
 Route::post('/ranking', [RatingController::class, 'updateRanking']);
-Route::post('/content', [ContentController::class, 'createContent']);
 
 Route::controller(ContentController::class)->group(function () {
     Route::get('/getPopularContent/{userId}', 'getPopularContent');
     Route::get('/getContentByCategory/{categoryName}/{userId}', 'getContentByCategory');
     Route::get('/getNewContent/{userId}', 'getNewContent');
+    Route::post('/content', 'createContent');
     Route::post('deleteContent', 'deleteContent');
 });
 
